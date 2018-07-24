@@ -1,3 +1,5 @@
+const sqreen = require('sqreen');
+
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
@@ -221,6 +223,7 @@ let store = new MongoStore({
 });
 
 app.enable('trust proxy');
+app.use(sqreen.middleware);
 app.use(helmet());
 app.set('port', process.env.PORT || 1111);
 app.use(logger('dev'));
@@ -344,8 +347,8 @@ MongoClient.connect(config.databaseConnectionString, {}, (err, client) => {
     app.config = config;
     app.port = app.get('port');
 
-    // run indexing
-    common.runIndexing(app)
+    common.testData(app) // seed on each startup
+    .then(() => common.runIndexing(app)) // run indexing
     .then(app.listen(app.get('port')))
     .then(() => {
         // lift the app
