@@ -191,6 +191,7 @@ router.post('/product/updatecart', (req, res, next) => {
 // Remove single product from cart
 router.post('/product/removefromcart', (req, res, next) => {
     // remove item from cart
+    req.sqreen.track('cart.remove', { properties: { productId: req.body.cart_index } })
     async.each(req.session.cart, (item, callback) => {
         if(item){
             if(item.productId === req.body.cart_index){
@@ -207,6 +208,7 @@ router.post('/product/removefromcart', (req, res, next) => {
 
 // Totally empty the cart
 router.post('/product/emptycart', (req, res, next) => {
+    req.sqreen.track('cart.empty');
     delete req.session.cart;
     delete req.session.orderId;
 
