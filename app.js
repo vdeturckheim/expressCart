@@ -242,6 +242,17 @@ app.use(session({
     store: store
 }));
 
+app.use((req, res, next) => {
+
+    if (req.session && req.session.customers && req.session.customers.email) {
+        req.sqreen.identify({ email: req.session.customers.email });
+        if (req.sqreen.userIsBanned()) {
+            return;
+        }
+    }
+    next();
+});
+
 // serving static content
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views', 'themes')));

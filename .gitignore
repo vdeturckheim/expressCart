@@ -3,3 +3,4 @@ data/
 config/settings.json
 .vscode
 **.DS_Store
+sqreen.json
