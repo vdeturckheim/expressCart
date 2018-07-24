@@ -220,6 +220,7 @@ router.post('/product/addtocart', (req, res, next) => {
     const db = req.app.db;
     let productQuantity = req.body.productQuantity ? parseInt(req.body.productQuantity) : 1;
 
+    req.sqreen.track('cart.add', { properties: { productQuantity, productId: req.body.productId } });
     // Don't allow negative quantity
     if(productQuantity < 0){
         productQuantity = 1;
@@ -475,6 +476,7 @@ router.get('/page/:pageNum', (req, res, next) => {
 
 // The main entry point of the shop
 router.get('/:page?', (req, res, next) => {
+    req.sqreen.track('product.list', { properties: { page: req.params.page || 0 } });
     let db = req.app.db;
     let config = req.app.config;
     let numberProducts = config.productsPerPage ? config.productsPerPage : 6;
