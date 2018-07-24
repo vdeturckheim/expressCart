@@ -244,8 +244,8 @@ app.use(session({
 
 app.use((req, res, next) => {
 
-    if (req.session && req.session.customers && req.session.customers.email) {
-        req.sqreen.identify({ email: req.session.customers.email });
+    if (req.session && req.session.customer && req.session.customer.email) {
+        req.sqreen.identify({ email: req.session.customer.email });
         if (req.sqreen.userIsBanned()) {
             return;
         }

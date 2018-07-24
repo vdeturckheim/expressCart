@@ -98,6 +98,7 @@ router.get('/cartPartial', (req, res) => {
 
 // show an individual product
 router.get('/product/:id', (req, res) => {
+    req.sqreen.track('product.read', { properties: { id: req.params.id } });
     let db = req.app.db;
     let config = req.app.config;
 
